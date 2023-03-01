@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 type GameBoard struct {
 	length int
 	width  int
@@ -19,4 +21,19 @@ func NewGameBoard(len, wid int) *GameBoard {
 		width:  wid,
 		board:  board,
 	}
+}
+
+func (b *GameBoard) TakeHit(xVal, yVal int) bool {
+	location := b.board[xVal][yVal]
+	if location == "S" {
+		location = "H"
+		return true
+	} else {
+		location = "X"
+		return false
+	}
+}
+
+func (b *GameBoard) Displayboard() {
+	fmt.Print(b.board)
 }

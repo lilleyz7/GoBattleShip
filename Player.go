@@ -7,7 +7,6 @@ type Position struct {
 
 type Player struct {
 	name          string
-	currentBoard  GameBoard
 	selectedMoves []Position
 }
 
@@ -28,18 +27,6 @@ func (pl *Player) MakeMove(p Position, g GameBoard) bool {
 			return false
 		}
 	}
-	pos := g.board[p.xVal][p.yVal]
-	switch pos {
-	case 0:
-		pos = "X"
-		pl.AddMove(p)
-		return false
-	case 1:
-		pos = "H"
-		pl.AddMove(p)
-		return true
-	default:
-		//error
-		return false
-	}
+	attackSuccess := g.TakeHit(p.xVal, p.yVal)
+	return attackSuccess
 }

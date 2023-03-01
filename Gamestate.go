@@ -6,11 +6,9 @@ type Gamestate struct {
 	isRunning  bool
 }
 
-func NewGame() *Gamestate {
-	player1 := NewPlayer("Zach")
+func NewGameState() *Gamestate {
 	return &Gamestate{
-		turn:       0,
-		activeTurn: *player1,
-		isRunning:  true,
+		turn:      0,
+		isRunning: true,
 	}
 }
