@@ -1,4 +1,4 @@
-package main
+package types
 
 type Position struct {
 	xVal int
@@ -6,13 +6,28 @@ type Position struct {
 }
 
 type Player struct {
-	name          string
-	selectedMoves []Position
+	name            string
+	selectedMoves   []Position
+	remainingPieces int
 }
 
-func NewPlayer(name string) *Player {
+func NewPlayer(name string, pieces int) *Player {
 	return &Player{
-		name: name,
+		name:            name,
+		remainingPieces: pieces,
+	}
+}
+
+func (pl *Player) GetRemainingPieces() int {
+	return pl.remainingPieces
+}
+
+func (pl *Player) RemovePiece() bool {
+	pl.remainingPieces--
+	if pl.remainingPieces < 1 {
+		return false
+	} else {
+		return true
 	}
 }
 

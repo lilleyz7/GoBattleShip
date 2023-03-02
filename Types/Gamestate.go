@@ -1,4 +1,4 @@
-package main
+package types
 
 type Gamestate struct {
 	turn       int

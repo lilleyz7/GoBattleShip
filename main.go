@@ -1,17 +1,20 @@
 package main
 
-import "fmt"
+import (
+	types "BattleShip/Types"
+	"fmt"
+)
 
-const length = 8
-const width = 8
+const length = 5
+const width = 5
 
-func PickShipLocations(p *Player, b *GameBoard) {
+func PickShipLocations(p *types.Player, b *types.GameBoard) {
 	var xVal int
 	var yVal int
 	var alignment string
 	i := 0
 
-	for i < 5 {
+	for i < 4 {
 		fmt.Println("You will select 4 points on the board and select to face the ships vert or horizontally")
 		fmt.Println("Select your first x value:")
 		fmt.Scanln(&xVal)
@@ -19,31 +22,52 @@ func PickShipLocations(p *Player, b *GameBoard) {
 		fmt.Scanln(&yVal)
 		fmt.Println("Vertical or horizontal? Enter v or h")
 		fmt.Scanln(&alignment)
-		SetLocation(xVal, yVal, alignment, b)
+		shipSet := SetShips(xVal, yVal, alignment, b)
+		if shipSet == false {
+			fmt.Print("Not a legal coordinate for placement try again")
+		} else {
+			i++
+		}
 	}
 
 }
 
-func SetLocation(x int, y int, a string, b *GameBoard) {
-	b.board[x][y] = "S"
-
-	if a == "v" {
-		b.board[x][y+1] = "S"
-		b.board[x][y-1] = "S"
-	} else if a == "h" {
-		b.board[x+1][y] = "S"
-		b.board[x-1][y] = "S"
+func SetShips(x int, y int, a string, b *types.GameBoard) bool {
+	placement := b.SetLocation(x, y)
+	if placement == true {
+		if a == "v" {
+			b.SetLocation(x, y+1)
+			b.SetLocation(x, y-1)
+			return true
+		} else {
+			b.SetLocation(x+1, y)
+			b.SetLocation(x-1, y)
+			return true
+		}
 	} else {
-		fmt.Println("Invalid entry")
+		return false
+	}
+
+}
+
+func RunGame(player *types.Player, ai *types.Player, pBoard *types.GameBoard, aBoard *types.GameBoard, state *types.Gamestate) {
+	for {
+		pBoard.Displayboard()
+		break
+
 	}
 }
 
 func main() {
 	//state := NewGameState()
-	player := NewPlayer("Zach")
-	//aiPlayer := NewPlayer("AI")
-	playerBoard := NewGameBoard(length, width)
+	player := types.NewPlayer("Zach", 12)
+	//aiPlayer := NewPlayer("AI", 12)
+	playerBoard := types.NewGameBoard(length, width)
+	playerBoard.Displayboard()
 	//aiBoard := NewGameBoard(width, length)
-	PickShipLocations(player, playerBoard)
+	//PickShipLocations(player, playerBoard)
+
+	//RunGame(player, aiPlayer, playerBoard, aiBoard, state)
+	fmt.Print(player.GetRemainingPieces())
 
 }
