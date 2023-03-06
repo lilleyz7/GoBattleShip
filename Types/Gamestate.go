@@ -1,9 +1,8 @@
 package types
 
 type Gamestate struct {
-	turn       int
-	activeTurn Player
-	isRunning  bool
+	turn      int
+	isRunning bool
 }
 
 func NewGameState() *Gamestate {
@@ -11,4 +10,8 @@ func NewGameState() *Gamestate {
 		turn:      0,
 		isRunning: true,
 	}
+}
+
+func (g *Gamestate) GetTurn() int {
+	return g.turn
 }
